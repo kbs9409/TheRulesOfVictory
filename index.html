@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <title>Radar chart</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="RadarChart.js"></script>
+	<style>
+		body {
+		  overflow: hidden;
+		  margin: 0;
+		  font-size: 16px;
+		  font-family: "Helvetica Neue", Helvetica;
+		}
+
+		#chart {
+		  position: absolute;
+		  top: 70px;
+		  left: 0px;
+		}	
+	</style>
+  </head>
+  <body>
+     <div id="body">
+        <h3>&nbsp; &nbsp; &nbsp; &nbsp; Correlations between record and win-rate in baseball</h3>
+	   <div id="chart"></div>
+     </div>
+     <span style="line-height: 3100%"><br></span>
+       <ul style="font-size: 14px">
+          <li>AVG(H): Batting average for hitter</li>
+          <li>R(H): Runs for hitter</li>
+          <li>H: Hits</li>
+          <li>2B: Doubles (2-base hits)</li>
+          <li>3B: Triples (3-base hits)</li>
+          <li>HR: Home runs</li>
+          <li>SLG: Slugging percentage</li>
+          <li>OBP: On-base percentage</li>
+          <li>OPS: OBP + SLG</li>
+          <li>RISP: Runner in scoring position</li>
+          <li>ERA: Earned run average</li>
+          <li>SV: Saves</li>
+          <li>IP: Innings pitched</li>
+          <li>BB(P): Base on balls for pitcher</li>
+          <li>R(P): Runs for pitcher</li>
+          <li>WHIP: Walks plus hits divided by innings pitched</li>
+          <li>QS: Quality Starts</li>
+          <li>TBF: Total batters faced</li>
+          <li>AVG(P): Batting average for pitcher</li>
+          <li>PKO: Pick off outs</li>
+          <li>PO: Put outs</li>
+       </ul>
+    <script type="text/javascript" src="script.js"></script>
+
+  </body>
+</html>
