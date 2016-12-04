@@ -3,14 +3,12 @@
 ////////////////////////////////////////////////////////////// 
 
 var margin = {top: 100, right: 100, bottom: 100, left: 100},
-	width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+	width = Math.min(650, window.innerWidth - 10) - margin.left - margin.right,
 	height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
 
 ////////////////////////////////////////////////////////////// 
 //////////////////// Draw the Chart ////////////////////////// 
 ////////////////////////////////////////////////////////////// 
-
-var color = d3.scale.ordinal().range(["#E41A1C" , "#377EB8"]);
 
 var radarChartOptions = {
 		w: width,
@@ -19,27 +17,17 @@ var radarChartOptions = {
 		maxValue: 1,
 		levels: 5,
 		roundStrokes: true,
-		color: color
+		color: d3.scale.category10()
 	};
 
 function getCorrelation(x, y){
-	var shortestArrayLength = 0;
-   
-	  if(x.length == y.length) {
-	      shortestArrayLength = x.length;
-	  } else if(x.length > y.length) {
-	      shortestArrayLength = y.length;
-	      console.error('x has more items in it, the last ' + (x.length - shortestArrayLength) + ' item(s) will be ignored');
-	  } else {
-	      shortestArrayLength = x.length;
-	      console.error('y has more items in it, the last ' + (y.length - shortestArrayLength) + ' item(s) will be ignored');
-	  }
+	var ArrayLength = x.length;
 
 	  var xy = [];
 	  var x2 = [];
 	  var y2 = [];
 
-	  for(var i=0; i<shortestArrayLength; i++) {
+	  for(var i=0; i<ArrayLength; i++) {
 	      xy.push(x[i] * y[i]);
 	      x2.push(x[i] * x[i]);
 	      y2.push(y[i] * y[i]);
@@ -51,7 +39,7 @@ function getCorrelation(x, y){
 	  var sum_x2 = 0;
 	  var sum_y2 = 0;
 
-	  for(var i=0; i< shortestArrayLength; i++) {
+	  for(var i=0; i<ArrayLength; i++) {
 	      sum_x += x[i];
 	      sum_y += y[i];
 	      sum_xy += xy[i];
@@ -59,9 +47,9 @@ function getCorrelation(x, y){
 	      sum_y2 += y2[i];
 	  }
 
-	  var step1 = (shortestArrayLength * sum_xy) - (sum_x * sum_y);
-	  var step2 = (shortestArrayLength * sum_x2) - (sum_x * sum_x);
-	  var step3 = (shortestArrayLength * sum_y2) - (sum_y * sum_y);
+	  var step1 = (ArrayLength * sum_xy) - (sum_x * sum_y);
+	  var step2 = (ArrayLength * sum_x2) - (sum_x * sum_x);
+	  var step3 = (ArrayLength * sum_y2) - (sum_y * sum_y);
 	  var step4 = Math.sqrt(step2 * step3);
 	  var answer = step1 / step4;
 
@@ -72,15 +60,25 @@ function getCorrelation(x, y){
 ////////////////////////// Data ////////////////////////////// 
 ////////////////////////////////////////////////////////////// 
 
+var stack = [];
+
+// Initial radar chart structure
+RadarChart(".radarChart", [stack], radarChartOptions);
+
 function setting(){
 	var start_year = parseInt(document.getElementById("start_year").value);
 	var end_year = parseInt(document.getElementById("end_year").value);
 
 	if(start_year > end_year){
 		end_year = start_year;
-		//console.log("end", String(end_year))
 		document.getElementById("end_year").value = String(start_year);
 	}
+
+	d3.selectAll("input").each(function(d){
+		if(d3.select(this).attr("id") == "combination")
+			if(d3.select(this).node().checked)
+				stack = [];
+	})
 
 	var teamlist = [];
 
@@ -93,11 +91,7 @@ function setting(){
 		}
 	})
 
-	//console.log("teamlist", teamlist)
-
-	d3.csv("https://raw.githubusercontent.com/kbs9409/TheRulesOfVictory/master/data2.csv", function(data){
-	//console.log("data:", data)
-		
+	d3.csv("https://raw.githubusercontent.com/kbs9409/TheRulesOfVictory/master/data2.csv", function(data){	
 	var realval = [];
 	var WinRate = [];
 	var metric0 = [];
@@ -124,16 +118,10 @@ function setting(){
 	var metric21 = [];
 
 	data.map(function(d){
-		//console.log("d", d)
-		//console.log("d's year", parseInt(d.Year))
-		//console.log("start", start_year)
-		//console.log("end", end_year)
-
 		for(i=0; i<22; i++){
 			var winrate;
 			var metric = -1;
 			if(parseInt(d.Year) >= start_year && parseInt(d.Year) <= end_year && teamlist.includes(d.Team)){
-				
 				if(i == 0){
 					WinRate.push(+d.WinRate);
 					metric0.push(+d.ERA)
@@ -159,22 +147,11 @@ function setting(){
 				else if(i == 19){metric19.push(+d.WAR_H)}
 				else if(i == 20){metric20.push(+d.SB)}
 				else{metric21.push(+d.EG)}
-
-				//console.log("i", i);
-				//console.log("WinRate", WinRate);
-				//console.log("metric0", metric0);
-				//console.log("metric10", metric10);
-				//console.log("metric21", metric21);
 			}
-			
-				
 		}
 	})
 
 	if(WinRate.length != 0){
-			//console.log("value1", value1);
-			//console.log("value2", value2);
-
 			realval.push({"axis":"ERA", "value":Math.abs(getCorrelation(WinRate, metric0))});
 			realval.push({"axis":"WHIP", "value":Math.abs(getCorrelation(WinRate, metric1))});
 			realval.push({"axis":"K9", "value":Math.abs(getCorrelation(WinRate, metric2))});
@@ -197,12 +174,28 @@ function setting(){
 			realval.push({"axis":"WAR_H", "value":Math.abs(getCorrelation(WinRate, metric19))});
 			realval.push({"axis":"SB", "value":Math.abs(getCorrelation(WinRate, metric20))});
 			realval.push({"axis":"EG", "value":Math.abs(getCorrelation(WinRate, metric21))});
-			
-			//console.log("realval", realval)
 		}
-	
-	RadarChart(".radarChart", [realval], radarChartOptions);	
+
+		stack.push(realval);
+		RadarChart(".radarChart", stack, radarChartOptions);
+
+		d3.selectAll("input").each(function(d){
+			if(d3.select(this).attr("id") == "combination")
+				if(d3.select(this).node().checked)
+					stack.pop();
+		})
 	});
+}
+
+function Reset(){
+	d3.selectAll("input").each(function(d){
+		if(d3.select(this).attr("id") == "combination")
+			d3.select(this).node().checked = true;
+	})
+	Uncheck();
+	document.getElementById("start_year").value = "2016";
+	document.getElementById("end_year").value = "2016";
+	setting();
 }
 
 function checkAll(){

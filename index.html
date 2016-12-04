@@ -13,8 +13,8 @@
 		
 		<style>
 			body {
-				font-family: 'Open Sans', sans-serif;
-				font-size: 11px;
+				font-family: 'Times New Romans';
+				font-size: 15px;
 				font-weight: 300;
 				fill: #242424;
 				text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
@@ -34,7 +34,11 @@
 	</head>
 	<body style="overflow: auto">
 	<div id="container" style="width:880px; margin:0 auto">
-		<div id="setting"  style="width:180px; height:700px; float:left">
+		<div id="title" style="width:880px; height:100px; float:left; text-align:center">
+			<h1>The Rules of Victory: How to Win a Baseball Game</h1>
+			<h3><em>Pearson Correlation Coefficient</em> between win rate and baseball records (absolute value)</h3>
+		</div>
+		<div id="setting"  style="width:180px; height:650px; float:left">
 		<br><br><br>
 			<input type="radio" name="mode" id="combination" checked="checked"><label for="combination">Combination</label><br>
 			<input type="radio" name="mode" id="comparison"><label for="comparison">Comparison</label><br>
@@ -42,6 +46,7 @@
 		
 		<form>
 			<select id="start_year">
+				<option value="2007" selected="selected">2007</option>
 				<option value="2008">2008</option>
 				<option value="2009">2009</option>
 				<option value="2010">2010</option>
@@ -50,12 +55,13 @@
 				<option value="2013">2013</option>
 				<option value="2014">2014</option>
 				<option value="2015">2015</option>
-				<option value="2016" selected="selected">2016</option>
+				<option value="2016">2016</option>
 			</select>
 		
-			&nbsp ~ &nbsp
+			&nbsp~&nbsp
 		
 			<select id="end_year">
+				<option value="2007">2007</option>
 				<option value="2008">2008</option>
 				<option value="2009">2009</option>
 				<option value="2010">2010</option>
@@ -72,20 +78,59 @@
 			<button onclick="Uncheck()">Uncheck</button><br><br>
 
 		<form>
-			<label for="DS"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/OB.png&type=f25_25&refresh=1"></label><input type="checkbox" name="team" id="Doosan"><br>
-			<label for="LT"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/LT.png&type=f25_25&refresh=1"></label><input type="checkbox" name="team" id="Lotte"><br>
-			<label for="NX"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/WO.png&type=f25_25&refresh=1"></label><input type="checkbox" name="team" id="Nexen"><br>
-			<label for="LG"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/LG.png&type=f25_25&refresh=1"></label><input type="checkbox" name="team" id="LG"><br>
-			<label for="KI"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/HT.png&type=f25_25&refresh=1"></label><input type="checkbox" name="team" id="KIA"><br>
-			<label for="SK"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/SK.png&type=f25_25&refresh=1"></label><input type="checkbox" name="team" id="SK"><br>
-			<label for="HH"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/HH.png&type=f25_25&refresh=1"></label><input type="checkbox" name="team" id="Hanwha"><br>
-			<label for="SS"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/SS.png&type=f25_25&refresh=1"></label><input type="checkbox" name="team" id="Samsung"><br><br>
+			<input type="checkbox" name="team" id="Doosan"><label for="Doosan"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/OB.png&type=f25_25&refresh=1"> Doosan Bears </label><br>
+
+			<input type="checkbox" name="team" id="Hanwha"><label for="Hanwha"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/HH.png&type=f25_25&refresh=1"> Hanwha Eagles </label><br>
+
+			<input type="checkbox" name="team" id="KIA"><label for="KIA"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/HT.png&type=f25_25&refresh=1"> KIA Tigers </label><br>
+
+			<input type="checkbox" name="team" id="KT"><label for="KT"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/KT.png&type=f25_25&refresh=1"> KT Wiz </label><br>
+
+			<input type="checkbox" name="team" id="LG"><label for="LG"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/LG.png&type=f25_25&refresh=1"> LG Twins </label><br>
+
+			<input type="checkbox" name="team" id="Lotte"><label for="Lotte"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/LT.png&type=f25_25&refresh=1"> Lotte Giants </label><br>
+
+			<input type="checkbox" name="team" id="NC"><label for="NC"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/NC.png&type=f25_25&refresh=1"> NC Dinos </label><br>
+
+			<input type="checkbox" name="team" id="Nexen"><label for="Nexen"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/WO.png&type=f25_25&refresh=1"> Nexen Heroes </label><br>
+
+			<input type="checkbox" name="team" id="Samsung"><label for="Samsung"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/SS.png&type=f25_25&refresh=1"> Samsung Lions </label><br>
+
+			<input type="checkbox" name="team" id="SK"><label for="SK"><img src="http://dthumb.phinf.naver.net/?src=http://imgsports.naver.net/images/emblem/new/kbo/default/SK.png&type=f25_25&refresh=1"> SK Wyverns </label><br><br>
 		</form>
 
 			<button onclick="setting()">Apply</button>
+			<button onclick="Reset()">Reset</button>
 		</div>
 
-		<div class="radarChart" style="width:700px; height:700px; float:right"></div>
+		<div class="radarChart" style="width:700px; height:650px; float:right"></div>
+		<div id="explanation" style="width:880px; float:left">
+		      <ul style="font-size: 17px">
+		          <li><strong>ERA</strong>: Earned Run Average</li>
+		          <li><strong>WHIP</strong>: Walks plus Hits divided by Innings Pitched</li>
+		          <li><strong>K9 (K/9)</strong>: Strike-outs per 9 innings of pitchers</li>
+		          <li><strong>BB9 (BB/9)</strong>: Base on Balls per 9 innings of pitchers</li>
+		          <li><strong>HR9 (HR/9)</strong>: Home Runs per 9 innings of pitchers</li>
+		          <li><strong>KBB (K/BB)</strong>: Strike-outs divided by Base on Balls of pitchers</li>
+		          <li><strong>R_P</strong>: Runs of pitchersSLG: Slugging percentage</li>
+		          <li><strong>WAR_P (sWAR)</strong>: total Wins Above Replacement player of pitchers</li>
+		          <li><strong>LOB (LOB%)</strong>: Left On Base Percentage of pitchers</li>
+		          <li><strong>AVG</strong>: Batting Average of hitters</li>
+		          <li><strong>R_H</strong>: Runs of hitters</li>
+		          <li><strong>OBP</strong>: On Base Percentage of hitters</li>
+		          <li><strong>SLG</strong>: Slugging percentage of hitters</li>
+		          <li><strong>OPS</strong>: OBP + SLG</li>
+		          <li><strong>HR (HR%)</strong>: Home Runs per plate of hitters</li>
+		          <li><strong>BB (BB%)</strong>: Base on Balls per plate of hitters</li>
+		          <li><strong>K (K%)</strong>: Strike-outs per plate of hitters</li>
+		          <li><strong>BBK (BB/K)</strong>: Base on Balls divided by Strike-outs of hitters</li>
+		          <li><strong>RISP</strong>: Batting Average when Runner In Scoring Position (2B or 3B) of hitters</li>
+		          <li><strong>WAR_H (sWAR)</strong>: total Wins Above Replacement player of hitters</li>
+		          <li><strong>SB (SB%)</strong>: Stolen Base Percentage</li>
+		          <li><strong>EG (E/G)</strong>: Errors per games</li>
+		      </ul>
+		      <p style="font-size: 14px">&nbsp; Data source: Records of Korea pro-baseball league (KBO league) from <a href="http://www.koreabaseball.com/Record/Team/Hitter/Basic1.aspx">KBO record</a> and <a href="http://www.statiz.co.kr/main.php">statiz</a></p>
+		</div>
 	</div>
 		<script src="radarChart.js"></script>	
 		<script type="text/javascript" src="script.js"></script>
